@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Snake — Raven Arcade{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/snake.css' %}">{% endblock %}
+{% block extra_head %}<meta name="csrf-token" content="{{ csrf_token }}">{% endblock %}
+{% block content %}
+<section class="game-page page-shell">
+    <div class="game-intro">
+        <a class="back-link" href="{% url 'home' %}">← Back to lobby</a>
+        <div class="eyebrow">02 / RAVEN CLASSIC</div>
+        <h1>Snake <em>after dark.</em></h1>
+        <p>Use the arrow keys or WASD. Collect the glowing morsels. Stay in the shadows.</p>
+    </div>
+    <div class="snake-layout">
+        <div class="board-wrap">
+            <canvas id="game-board" width="600" height="600" aria-label="Snake game board"></canvas>
+            <div id="game-message" class="game-message">
+                <span class="message-kicker">RAVEN ARCADE</span>
+                <strong id="message-title">Ready when you are.</strong>
+                <button id="start-button" class="button button-primary">Start game <span>↗</span></button>
+            </div>
+        </div>
+        <aside class="score-panel">
+            <div class="score-block"><span>YOUR HIGH SCORE</span><strong id="high-score">{{ user_score|stringformat:"04d" }}</strong></div>
+            <div class="score-block"><span>ALL-TIME HIGH</span><strong id="global-score">{{ global_score|stringformat:"04d" }}</strong></div>
+            <div class="score-block score-current"><span>CURRENT SCORE</span><strong id="score">0000</strong></div>
+            <div class="controls"><span>CONTROLS</span><p><kbd>↑</kbd><kbd>←</kbd><kbd>↓</kbd><kbd>→</kbd> or <b>W A S D</b></p></div>
+            <div class="game-tip"><span>FIELD NOTE</span><p>Every morsel makes the serpent longer. Every corner is a choice.</p></div>
+        </aside>
+    </div>
+    {% if not user.is_authenticated %}
+        <p class="signin-note">Sign in to save your score and join the leaderboard. <a href="{% url 'account' %}?next={% url 'snake' %}">Create an account ↗</a></p>
+    {% endif %}
+</section>
+{% endblock %}
+{% block scripts %}<script>window.ravenUserAuthenticated = {{ user.is_authenticated|yesno:"true,false" }};</script><script src="{% static 'js/snake.js' %}"></script>{% endblock %}

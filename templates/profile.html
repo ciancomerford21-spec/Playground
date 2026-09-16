@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}{{ user.username }} — Raven Arcade{% endblock %}
+{% block content %}
+<section class="profile-page page-shell">
+    <div class="eyebrow">04 / PLAYER PROFILE</div>
+    <div class="profile-header">
+        <div class="avatar">
+            {% if user.profile.profile_picture %}
+                <img src="{{ user.profile.profile_picture.url }}" alt="{{ user.username }} profile picture">
+            {% else %}
+                <span>{{ user.username|first|upper }}</span>
+            {% endif %}
+        </div>
+        <div>
+            <h1>{{ user.username }} <em>in the night.</em></h1>
+            <p>Member since {{ user.date_joined|date:"M Y" }} · Keep playing, keep climbing.</p>
+        </div>
+    </div>
+    <div class="profile-grid">
+        <section class="profile-card">
+            <div class="card-label">YOUR HIGH SCORES</div>
+            <div class="profile-score-row">
+                <span><b>⌁</b> Snake</span>
+                <strong>{{ game_scores.snake|default:0|stringformat:"04d" }}</strong>
+            </div>
+            <div class="profile-score-row">
+                <span><b>✦</b> Asteroid Destroyers</span>
+                <strong>{{ game_scores.asteroid_destroyers|default:0|stringformat:"04d" }}</strong>
+            </div>
+        </section>
+        <form class="profile-card upload-card" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="upload-heading">
+                <div>
+                    <div class="card-label">PROFILE PICTURE</div>
+                    <h2>Update your avatar</h2>
+                </div>
+                <span class="upload-icon">◉</span>
+            </div>
+            <p class="upload-help">Choose a square image to personalize your player profile.</p>
+            <label class="file-picker" for="{{ profile_form.profile_picture.id_for_label }}">
+                <span>Choose image</span>
+                <small>PNG, JPG or WEBP</small>
+            </label>
+            {{ profile_form.profile_picture }}
+            {{ profile_form.profile_picture.errors }}
+            <button class="button button-primary" type="submit">Save picture <span>↗</span></button>
+        </form>
+    </div>
+</section>
+{% endblock %}

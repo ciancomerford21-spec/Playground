@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Tetris — Raven Arcade{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/tetris.css' %}">{% endblock %}
+{% block content %}
+<section class="tetris-page page-shell">
+    <a class="back-link" href="{% url 'home' %}">← Back to lobby</a>
+    <div class="eyebrow">04 / BLOCK SHIFT</div>
+    <h1>Stack the <em>night.</em></h1>
+    <p class="tetris-intro">Fit the falling shapes, clear lines, and keep the tower from reaching the sky.</p>
+    <div class="tetris-layout">
+        <div class="tetris-board-wrap">
+            <canvas id="tetris-board" width="300" height="600" aria-label="Tetris game board"></canvas>
+            <div id="tetris-message" class="game-message">
+                <span class="message-kicker">RAVEN ARCADE</span>
+                <strong id="tetris-message-title">Ready to stack?</strong>
+                <button id="tetris-start" class="button button-primary">Start game <span>↗</span></button>
+            </div>
+        </div>
+        <aside class="tetris-panel">
+            <div class="score-block score-current"><span>SCORE</span><strong id="tetris-score">0000</strong></div>
+            <div class="score-block"><span>LINES</span><strong id="tetris-lines">00</strong></div>
+            <div class="tetris-controls"><span>CONTROLS</span><p><kbd>←</kbd><kbd>→</kbd> move · <kbd>↑</kbd> rotate · <kbd>↓</kbd> drop · <kbd>SPACE</kbd> hard drop</p></div>
+        </aside>
+    </div>
+</section>
+{% endblock %}
+{% block scripts %}<script src="{% static 'js/tetris.js' %}"></script>{% endblock %}

@@ -1,0 +1,44 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Raven Arcade{% endblock %}</title>
+    <meta name="description" content="Raven Arcade: small games for quiet nights.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/site.css' %}">
+    {% block extra_head %}{% endblock %}
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <div class="grain" aria-hidden="true"></div>
+    <header class="site-header">
+        <a class="brand" href="{% url 'home' %}" aria-label="Raven Arcade home">
+            <span class="brand-mark">✦</span>
+            <span>RAVEN<span class="brand-muted">/ARCADE</span></span>
+        </a>
+        <nav class="main-nav" aria-label="Main navigation">
+            <a href="{% url 'home' %}">Lobby</a>
+            <a href="{% url 'leaderboard' %}">Leaderboard</a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'profile' %}" class="nav-user">Profile</a>
+                <form action="{% url 'logout' %}" method="post" class="nav-form">
+                    {% csrf_token %}<button type="submit" class="nav-button">Logout</button>
+                </form>
+            {% else %}
+                <a href="{% url 'account' %}">Login</a>
+            {% endif %}
+        </nav>
+    </header>
+    <main>{% block content %}{% endblock %}</main>
+    <footer class="site-footer">
+        <span>QUIET GAMES FOR LOUD MINDS</span>
+        <span class="footer-dot">●</span>
+        <span>EST. AFTER MIDNIGHT</span>
+    </footer>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

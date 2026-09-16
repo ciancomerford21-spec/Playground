@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Lobby — Raven Arcade{% endblock %}
+{% block content %}
+<section class="hero page-shell">
+    <div class="eyebrow"><span class="eyebrow-line"></span> WELCOME TO THE NIGHT SHIFT</div>
+    <div class="hero-grid">
+        <div>
+            <h1>Stay sharp.<br><em>Play strange.</em></h1>
+            <p class="hero-copy">A tiny arcade for the hours when the city goes quiet. Pick a game, find your rhythm, and let the pixels keep watch.</p>
+            <a class="button button-primary" href="{% url 'snake' %}">Play Snake <span>↗</span></a>
+        </div>
+        <div class="raven-illustration" aria-hidden="true">
+            <div class="moon"></div>
+            <div class="raven-body">◈</div>
+            <div class="raven-eye"></div>
+            <span class="star star-one">✦</span><span class="star star-two">·</span><span class="star star-three">✧</span>
+        </div>
+    </div>
+</section>
+<section class="games-section page-shell">
+    <div class="section-heading">
+        <div><span class="eyebrow">01 / THE CABINET</span><h2>Choose your poison.</h2></div>
+        <span class="game-count">02 GAMES ONLINE</span>
+    </div>
+    <div class="game-grid">
+        <a class="game-card game-card-active" href="{% url 'leaderboard' %}">
+            <div class="card-top"><span class="card-number">01</span><span class="status"><i></i> LIVE</span></div>
+            <div class="card-icon">♛</div>
+            <h3>Leaderboard</h3>
+            <p>See who rules the night across every game.</p>
+            <span class="card-link">View rankings <b>→</b></span>
+        </a>
+        <a class="game-card game-card-active" href="{% url 'snake' %}">
+            <div class="card-top"><span class="card-number">02</span><span class="status"><i></i> LIVE</span></div>
+            <div class="card-icon">⌁</div>
+            <h3>Snake</h3>
+            <p>Eat. Grow. Don't bite your own tail.</p>
+            <span class="card-link">Enter game <b>→</b></span>
+        </a>
+        <a class="game-card game-card-active" href="{% url 'asteroid_destroyers' %}">
+            <div class="card-top"><span class="card-number">03</span><span class="status"><i></i> LIVE</span></div>
+            <div class="card-icon">✦</div>
+            <h3>Asteroid Destroyers</h3>
+            <p>Break the rocks. Own the void.</p>
+            <span class="card-link">Enter game <b>→</b></span>
+        </a>
+        <a class="game-card game-card-active" href="{% url 'tetris' %}">
+            <div class="card-top"><span class="card-number">04</span><span class="status status-desktop">DESKTOP</span></div>
+            <div class="card-icon">▦</div>
+            <h3>Tetris</h3>
+            <p>Stack the shapes. Clear the night.</p>
+            <span class="card-link">View game <b>→</b></span>
+        </a>
+    </div>
+</section>
+{% endblock %}

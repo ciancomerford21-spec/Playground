@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}Account — Raven Arcade{% endblock %}
+{% block content %}
+<section class="account-page page-shell">
+    <div class="eyebrow">03 / NIGHT SHIFT ACCESS</div>
+    <h1>Make your mark <em>in the dark.</em></h1>
+    <p class="account-intro">Create a Raven Arcade account to save your Snake scores and see how you stack up.</p>
+    <div class="account-grid">
+        <form class="account-card" method="post">
+            {% csrf_token %}<input type="hidden" name="form_type" value="login">
+            <h2>Return player</h2>
+            {{ login_form.non_field_errors }}
+            <label for="{{ login_form.username.id_for_label }}">Username</label>{{ login_form.username }}
+            {{ login_form.username.errors }}
+            <label for="{{ login_form.password.id_for_label }}">Password</label>{{ login_form.password }}
+            {{ login_form.password.errors }}
+            <input type="hidden" name="next" value="{{ request.GET.next }}">
+            <button class="button button-primary" type="submit">Log in <span>↗</span></button>
+        </form>
+        <form class="account-card account-card-highlight" method="post">
+            {% csrf_token %}<input type="hidden" name="form_type" value="register">
+            <h2>New player</h2>
+            {{ register_form.non_field_errors }}
+            <label for="{{ register_form.username.id_for_label }}">Username</label>{{ register_form.username }}
+            {{ register_form.username.errors }}
+            <label for="{{ register_form.password1.id_for_label }}">Password</label>{{ register_form.password1 }}
+            {{ register_form.password1.errors }}
+            <label for="{{ register_form.password2.id_for_label }}">Confirm password</label>{{ register_form.password2 }}
+            {{ register_form.password2.errors }}
+            <button class="button button-primary" type="submit">Create account <span>↗</span></button>
+        </form>
+    </div>
+</section>
+{% endblock %}

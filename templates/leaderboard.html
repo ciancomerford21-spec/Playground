@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Leaderboard — Raven Arcade{% endblock %}
+{% block content %}
+<section class="leaderboard-page page-shell">
+    <a class="back-link" href="{% url 'home' %}">← Back to lobby</a>
+    <div class="eyebrow">05 / THE HALL OF FAME</div>
+    <h1>Rule the <em>night.</em></h1>
+    <p class="leaderboard-intro">The sharpest players leave a mark. Rankings show each player's best score for every game.</p>
+    {% if leaderboard_games %}
+        <div class="leaderboard-grid">
+            {% for game, entries in leaderboard_games.items %}
+                <section class="leaderboard-card">
+                    <div class="leaderboard-heading">
+                        <div><span class="card-label">GAME {{ forloop.counter|stringformat:"02d" }}</span><h2>{% if game == "snake" %}Snake{% else %}{{ game|title }}{% endif %}</h2></div>
+                        <span class="status"><i></i> LIVE</span>
+                    </div>
+                    <div class="leaderboard-columns"><span>PLAYER</span><span>SCORE</span></div>
+                    {% for entry in entries %}
+                        <div class="leaderboard-row {% if entry.rank <= 3 %}leaderboard-top{% endif %}">
+                            <span class="rank">{{ entry.rank|stringformat:"02d" }}</span>
+                            <span class="leader-player">
+                                <span class="leader-avatar">
+                                    {% if entry.profile.profile_picture %}
+                                        <img src="{{ entry.profile.profile_picture.url }}" alt="">
+                                    {% else %}
+                                        {{ entry.username|first|upper }}
+                                    {% endif %}
+                                </span>
+                                <b>{{ entry.username }}</b>
+                            </span>
+                            <strong>{{ entry.score|stringformat:"04d" }}</strong>
+                        </div>
+                    {% endfor %}
+                </section>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="leaderboard-empty">
+            <span class="card-icon">♛</span>
+            <h2>The hall is quiet.</h2>
+            <p>Play Snake to claim the first place.</p>
+            <a class="button button-primary" href="{% url 'snake' %}">Play Snake <span>↗</span></a>
+        </div>
+    {% endif %}
+</section>
+{% endblock %}

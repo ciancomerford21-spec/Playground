@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Asteroid Destroyers — Raven Arcade{% endblock %}
+{% block extra_head %}<meta name="csrf-token" content="{{ csrf_token }}">{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/asteroids.css' %}">{% endblock %}
+{% block content %}
+<section class="asteroid-page page-shell">
+    <div class="game-intro">
+        <a class="back-link" href="{% url 'home' %}">← Back to lobby</a>
+        <div class="eyebrow">03 / VOID PATROL</div>
+        <h1>Asteroid <em>Destroyers.</em></h1>
+        <p>Move left and right with A/D or the arrow keys. Fire upward with the mouse or Space. Clear the field before the rocks find you.</p>
+    </div>
+    <div class="asteroid-layout">
+        <div class="asteroid-board">
+            <canvas id="asteroid-board" width="720" height="540" aria-label="Asteroid Destroyers game board"></canvas>
+            <div id="asteroid-message" class="game-message">
+                <span class="message-kicker">RAVEN ARCADE</span>
+                <strong id="asteroid-message-title">The void is waiting.</strong>
+                <button id="asteroid-start" class="button button-primary">Launch ship <span>↗</span></button>
+            </div>
+        </div>
+        <aside class="asteroid-score-panel">
+            <div class="asteroid-controls"><span>CONTROLS</span><p><kbd>← →</kbd> or <kbd>A D</kbd> move · <kbd>CLICK</kbd> / <kbd>SPACE</kbd> fire</p></div>
+            <div class="score-block"><span>YOUR HIGH SCORE</span><strong id="asteroid-high-score">{{ user_score|stringformat:"04d" }}</strong></div>
+            <div class="score-block"><span>ALL-TIME HIGH</span><strong id="asteroid-global-score">{{ global_score|stringformat:"04d" }}</strong></div>
+            <div class="score-block score-current"><span>CURRENT SCORE</span><strong id="asteroid-score">0000</strong></div>
+            <div class="health-block"><span>HULL HEALTH</span><strong id="asteroid-health">10</strong><div class="health-track"><i id="asteroid-health-fill"></i></div></div>
+        </aside>
+    </div>
+    {% if not user.is_authenticated %}<p class="signin-note">Sign in to save your score and join the leaderboard. <a href="{% url 'account' %}?next={% url 'asteroid_destroyers' %}">Create an account ↗</a></p>{% endif %}
+</section>
+{% endblock %}
+{% block scripts %}{% if user.is_authenticated %}<script>window.ravenUserAuthenticated = true;</script>{% else %}<script>window.ravenUserAuthenticated = false;</script>{% endif %}<script src="{% static 'js/asteroids.js' %}"></script>{% endblock %}

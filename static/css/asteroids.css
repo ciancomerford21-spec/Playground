@@ -1,0 +1,218 @@
+.asteroid-page {
+    padding:63px 0 95px
+}
+
+
+.asteroid-page .game-intro {
+    max-width:650px
+}
+
+
+.asteroid-page h1 {
+    font-size:clamp(50px,7vw,82px);
+    font-weight:500;
+    letter-spacing:-.06em;
+    margin:17px 0 15px
+}
+
+
+.asteroid-page h1 em {
+    font-family:var(--serif);
+    font-weight:400;
+    color:var(--acid)
+}
+
+
+.asteroid-page .game-intro p {
+    color:var(--muted);
+    font-size:14px;
+    line-height:1.6;
+    margin:0
+}
+
+
+.asteroid-layout {
+    display:grid;
+    grid-template-columns:minmax(400px,720px) 1fr;
+    gap:58px;
+    margin-top:50px;
+    align-items:start
+}
+
+
+.asteroid-board {
+    position:relative;
+    background:#171011;
+    border:1px solid var(--line);
+    padding:12px
+}
+
+
+.asteroid-board:before {
+    content:"";
+    position:absolute;
+    inset:12px;
+    background-image:radial-gradient(#e5484d55 1px,transparent 1px);
+    background-size:72px 72px;
+    pointer-events:none
+}
+
+
+.asteroid-board canvas {
+    display:block;
+    width:100%;
+    height:auto;
+    background:#130d0e
+}
+
+
+.asteroid-board .game-message {
+    position:absolute;
+    inset:12px;
+    background:#130d0ee8;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center
+}
+
+
+.asteroid-board .game-message.hidden {
+    display:none
+}
+
+
+.asteroid-score-panel {
+    border-top:1px solid var(--line)
+}
+
+.score-block {
+    padding:25px 0;
+    border-bottom:1px solid var(--line);
+    display:flex;
+    justify-content:space-between;
+    align-items:center
+}
+
+.score-block span {
+    color:var(--muted);
+    font:10px var(--mono);
+    letter-spacing:.15em
+}
+
+.score-block strong {
+    color:var(--paper);
+    font:25px var(--mono);
+    font-weight:400;
+    letter-spacing:.08em
+}
+
+.score-current {
+    background:#2a1517;
+    border:1px solid var(--acid);
+    box-shadow:0 0 28px #e5484d1f;
+    margin:12px -12px;
+    padding:25px 12px
+}
+
+.score-current span {
+    color:var(--acid)
+}
+
+.score-current strong {
+    color:var(--glow);
+    font-size:42px;
+    line-height:1;
+    text-shadow:0 0 18px #e5484d66
+}
+
+
+.health-block {
+    padding:25px 0;
+    border-bottom:1px solid var(--line)
+}
+
+
+.health-block>span {
+    font:10px var(--mono);
+    letter-spacing:.15em;
+    color:var(--acid)
+}
+
+
+.health-block strong {
+    float:right;
+    color:var(--paper);
+    font:20px var(--mono);
+    font-weight:400
+}
+
+
+.health-track {
+    clear:both;
+    height:7px;
+    background:#32191b;
+    margin-top:15px
+}
+
+
+.health-track i {
+    display:block;
+    height:100%;
+    width:100%;
+    background:var(--acid);
+    transition:width .2s ease
+}
+
+
+.asteroid-controls {
+    padding:27px 0;
+    border-bottom:1px solid var(--line)
+}
+
+
+.asteroid-controls>span {
+    font:10px var(--mono);
+    letter-spacing:.15em;
+    color:var(--acid)
+}
+
+
+.asteroid-controls p {
+    color:var(--muted);
+    font:12px var(--mono);
+    line-height:2;
+    margin:13px 0 0
+}
+
+
+.asteroid-controls kbd {
+    border:1px solid #694143;
+    padding:5px;
+    color:var(--paper)
+}
+
+
+@media(max-width:800px) {
+    .asteroid-page {
+        padding-top:40px
+    }
+
+
+    .asteroid-layout {
+        grid-template-columns:1fr;
+        gap:35px;
+        margin-top:35px
+    }
+
+
+    .asteroid-board {
+        padding:8px
+    }
+
+
+    .asteroid-board .game-message {
+        inset:8px
+    }
+}
