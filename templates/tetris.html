@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% block title %}Tetris — Raven Arcade{% endblock %}
+{% block extra_head %}<meta name="csrf-token" content="{{ csrf_token }}">{% endblock %}
 {% block extra_css %}<link rel="stylesheet" href="{% static 'css/tetris.css' %}">{% endblock %}
 {% block content %}
 <section class="tetris-page page-shell">
@@ -19,10 +20,12 @@
         </div>
         <aside class="tetris-panel">
             <div class="score-block score-current"><span>SCORE</span><strong id="tetris-score">0000</strong></div>
+            <div class="score-block"><span>YOUR HIGH SCORE</span><strong id="tetris-high-score">{{ user_score|stringformat:"04d" }}</strong></div>
+            <div class="score-block"><span>ALL-TIME HIGH</span><strong id="tetris-global-score">{{ global_score|stringformat:"04d" }}</strong></div>
             <div class="score-block"><span>LINES</span><strong id="tetris-lines">00</strong></div>
             <div class="tetris-controls"><span>CONTROLS</span><p><kbd>←</kbd><kbd>→</kbd> move · <kbd>↑</kbd> rotate · <kbd>↓</kbd> drop · <kbd>SPACE</kbd> hard drop</p></div>
         </aside>
     </div>
 </section>
 {% endblock %}
-{% block scripts %}<script src="{% static 'js/tetris.js' %}"></script>{% endblock %}
+{% block scripts %}<script>window.ravenUserAuthenticated = {{ user.is_authenticated|yesno:"true,false" }};</script><script src="{% static 'js/tetris.js' %}"></script>{% endblock %}

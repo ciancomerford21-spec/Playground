@@ -19,6 +19,8 @@
         [[[2, 0], [0, 1], [1, 1], [2, 1]], "#9a63d3"]
     ];
     let board, piece, score, lines, timer, running = false;
+    let highScore = Number(document.getElementById("tetris-high-score").textContent) || 0;
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 
     function newPiece() {
         const selected = shapes[Math.floor(Math.random() * shapes.length)];
@@ -81,7 +83,23 @@
             draw();
         }, 550);
     }
-    function endGame() { if (!running) return; running = false; clearInterval(timer); title.textContent = "The tower reached the sky."; start.textContent = "Try again ↗"; message.classList.remove("hidden"); }
+    function saveScore() {
+        if (!window.ravenUserAuthenticated) return;
+        fetch("/scores/snake/", {
+            method: "POST",
+            headers: {"Content-Type": "application/json", "X-CSRFToken": csrfToken},
+            body: JSON.stringify({game: "tetris", score: score})
+        }).then(response => response.json()).then(data => {
+            if (data.user_score !== undefined) {
+                highScore = data.user_score;
+                document.getElementById("tetris-high-score").textContent = String(data.user_score).padStart(4, "0");
+            }
+            if (data.global_score !== undefined) {
+                document.getElementById("tetris-global-score").textContent = String(data.global_score).padStart(4, "0");
+            }
+        }).catch(() => {});
+    }
+    function endGame() { if (!running) return; running = false; clearInterval(timer); saveScore(); title.textContent = "The tower reached the sky."; start.textContent = "Try again ↗"; message.classList.remove("hidden"); }
     document.addEventListener("keydown", event => {
         if (!running) return;
         if (event.key === "ArrowLeft" && fits(piece.blocks, piece.x - 1, piece.y)) piece.x -= 1;

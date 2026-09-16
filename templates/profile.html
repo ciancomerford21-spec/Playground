@@ -28,6 +28,10 @@
                 <span><b>✦</b> Asteroid Destroyers</span>
                 <strong>{{ game_scores.asteroid_destroyers|default:0|stringformat:"04d" }}</strong>
             </div>
+            <div class="profile-score-row">
+                <span><b>▦</b> Tetris</span>
+                <strong>{{ game_scores.tetris|default:0|stringformat:"04d" }}</strong>
+            </div>
         </section>
         <form class="profile-card upload-card" method="post" enctype="multipart/form-data">
             {% csrf_token %}

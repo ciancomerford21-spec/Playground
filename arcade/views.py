@@ -63,7 +63,15 @@ def asteroid_destroyers(request):
 
 
 def tetris(request):
-    return render(request, "tetris.html")
+    user_score = (
+        GameScore.objects.filter(user=request.user, game="tetris")
+        .order_by("-score")
+        .values_list("score", flat=True)
+        .first()
+        or 0
+    ) if request.user.is_authenticated else 0
+    global_score = GameScore.objects.filter(game="tetris").values_list("score", flat=True).first() or 0
+    return render(request, "tetris.html", {"user_score": user_score, "global_score": global_score})
 
 
 def account(request):
@@ -121,7 +129,7 @@ def save_score(request):
         game = payload.get("game", "snake")
     except (TypeError, ValueError, json.JSONDecodeError):
         return JsonResponse({"error": "Score must be a number."}, status=400)
-    if game not in {"snake", "asteroid_destroyers"}:
+    if game not in {"snake", "asteroid_destroyers", "tetris"}:
         return JsonResponse({"error": "Unknown game."}, status=400)
     if score < 0 or score > 1000000:
         return JsonResponse({"error": "Score is out of range."}, status=400)
